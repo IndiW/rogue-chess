@@ -4,7 +4,7 @@ A pixel-art chess roguelike, built for GitHub Pages. No backend, accounts, or ru
 ## Play
 You play White against an in-browser minimax engine running in a Web Worker. Win to advance a floor; lose or resign to choose a relic and restart at floor 1. Draw to replay the current floor. Standard chess legality is provided by chess.js, including castling, en passant, and a promotion picker.
 
-- **Echo stone:** once per battle, move the same piece twice. Each move must be legal; you cannot leave your king in check. End the turn early if desired. Checkmate ends the battle immediately.
+- **Echo stone:** once per battle, move the same piece twice. Each move must be legal; you cannot leave your king in check. End the turn early if desired. Giving check ends your turn immediately, preventing an unanswered check. Checkmate ends the battle immediately.
 - **Oracle lens:** a single depth-3 engine recommendation per battle.
 - **Hourglass:** undo your last turn and the opponent reply, once per battle.
 - **Royal seed:** start each battle with a knight in place of the a2 pawn.
