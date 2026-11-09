@@ -11,6 +11,12 @@ You play White against an in-browser minimax engine running in a Web Worker. Win
 
 A chosen relic lasts the run; charges refresh per floor. Choosing a relic after defeat replaces the previous one. Progress is stored locally; reloading restarts the current battle. Engine depth rises from 1 to 3 over the first five floors; floors continue indefinitely at depth 3. This is a simple engine, not Stockfish.
 
+## Audio and pixel pieces
+
+Use the music-note button in the header to start the original 8-bit soundtrack. Music is off on first visit; sound effects are on. Both controls save your preference on this device. Audio starts after a click or keypress, and the music pauses in background tabs. Move, capture, castling, promotion, and check cues are synthesized with Web Audio, with no audio downloads or external services.
+
+The six piece types use original 15 × 19 pixel silhouettes, carved details, directional highlights, and contact shadows.
+
 ## Develop
 Requires Node 22 or later.
 
