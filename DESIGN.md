@@ -6,3 +6,7 @@ Tokens: background #161c19, surface #1d271f, text #e9e9d7, muted #9aab9c, amber 
 Piece refinement: authored 15 × 19 silhouettes with a cross for the king, three-tined queen crown, split bishop mitre, horse-head knight, battlement rook, and shorter round pawn. Ivory palette: body #e8dfba, light #fff9e2, shade #b2a67e, detail #938563. Obsidian palette: body #344c49, light #8aaba0, shade #233a37, detail #142d2a. Offset drop shadows and small contact shadows anchor pieces on the board. Header audio controls use the existing square geometry and amber pressed state; collapse to accessible icon buttons on mobile.
 
 Original A-minor chiptune: 108 BPM, 64-step lead, triangle bass and quiet square arpeggios. Independent music and effects controls with saved preferences; music off on first visit, audio unlocked by user interaction, background music paused.
+
+Relics: original indexed-color 16 × 18 pixel sprites: amethyst Echo shard, blue-glass Oracle lens, purple Hourglass with amber sand, crowned green Royal seed. Left-lit pixel shading and contact shadows match pieces. Time tokens: accent #cba6f4, border #79608f, surface #2a2434, secondary #cbb8dd. Insight: #8ed5f1 / #4e8095 / #1d303a / #b2d0dd. Growth: #b5d88f / #6b8751 / #293622 / #c3d5af. Both type label and color appear on reward and equipped states.
+
+Player clock: next to player identity, tabular Space Grotesk numerals, 3:00 starting value. Active clock uses amber, paused uses moss, 30 seconds or less uses coral #ffb19b. No flashing or layout rerenders on ticks.

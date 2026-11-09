@@ -4,10 +4,14 @@ A pixel-art chess roguelike, built for GitHub Pages. No backend, accounts, or ru
 ## Play
 You play White against Stockfish 17.1 lite running in a browser Web Worker. Win to advance a floor; lose or resign to choose a relic and restart at floor 1. Draw to replay the current floor. Standard chess legality is provided by chess.js, including castling, en passant, and a promotion picker.
 
+Each battle gives you **three minutes of total player thinking time**, with no increment. The clock runs only on White’s turn, including Oracle searches, Echo moves, promotion choices, help dialogs, and time in background tabs. Black’s turn and engine loading on Black’s turn pause the clock. Timeout ends the run and opens relic selection. Each new battle starts at 3:00. Hourglass never refunds spent time.
+
 - **Echo stone:** once per battle, move the same piece twice. Each move must be legal; you cannot leave your king in check. End the turn early if desired. Giving check ends your turn immediately, preventing an unanswered check. Checkmate ends the battle immediately.
 - **Oracle lens:** one full-skill Stockfish recommendation per battle, with up to 2.5 seconds of analysis.
 - **Hourglass:** undo your last turn and the opponent reply, once per battle.
 - **Royal seed:** start each battle with a knight in place of the a2 pawn.
+
+Relic images use the same pixel grid, directional highlights, and shadows as the pieces. Type colors and visible labels identify **Time** (purple: Echo stone and Hourglass), **Insight** (blue: Oracle lens), and **Growth** (green: Royal seed).
 
 A chosen relic lasts the run; charges refresh per floor. Choosing a relic after defeat replaces the previous one. Progress is stored locally; reloading restarts the current battle. Stockfish skill rises from 0 on floor 1 to 20 on floor 11. Search depth caps rise from 4 to 24, with think-time limits from 250 ms to 2 seconds. Later floors retain maximum difficulty. The Oracle uses skill 20, depth cap 28, and a 2.5-second limit regardless of floor. These are difficulty settings, not measured Elo ratings.
 
