@@ -55,3 +55,125 @@
 .clock-low .clock-face{color:#ffb19b}
 @media(max-width:600px){.relic.equipped{padding:17px 10px}.relic-sprite{width:58px;height:66px}.relic.equipped .relic-art{height:66px}.equipped h3{margin-top:7px}.choice .choice-art{height:65px;margin-bottom:10px}.choice-art .relic-sprite{height:62px;width:54px}.choice .choice-desc{font-size:10px}.clock-face{font-size:22px}.player-clock{min-width:75px;padding:6px 8px}.player{gap:9px}.player strong{font-size:12px}}
 .choice{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start}
+/* Piece-earned packs and permanent mastery extend the dungeon's pixel world. */
+.item-movement{--item:#f0bf7b;--item-border:#a07d4c;--item-bg:#342c20;--item-ink:#dec9ac}
+.inventory{display:flex;flex-direction:column;gap:23px}
+.item-bag{margin-top:15px;max-height:258px;overflow:auto;display:flex;flex-direction:column;gap:8px}
+.bag-item{display:grid;grid-template-columns:40px 1fr;gap:9px;align-items:center;text-align:left;width:100%;padding:11px 9px;border:1px solid var(--item-border);background:var(--item-bg);color:var(--item)}
+.bag-item:hover:not(:disabled){box-shadow:inset 0 0 0 1px var(--item)}
+.bag-item:disabled{cursor:default}
+.bag-item strong{font-size:12px;font-weight:600;display:block}
+.bag-item .item-type{font-size:7px;letter-spacing:.8px;margin-top:5px}
+.bag-item small{font-size:9px;color:var(--item-ink);display:block;margin-top:5px}
+.bag-art .relic-sprite{width:40px;height:48px}
+.bag-empty{text-align:center;padding:25px 8px;background:#1d271f}
+.bag-empty .empty-art{width:32px;height:32px}
+.bag-empty p,.piece-empty{font-size:11px;line-height:1.8;color:#a9b89f}
+.piece-sheet{border-top:1px solid var(--line);padding-top:20px}
+.piece-sheet>.section-title{margin-bottom:14px}
+.piece-sheet>small,.xp-legend{font-size:9px;color:#9eaf93;line-height:1.7}
+.piece-identity{display:flex;align-items:center;gap:10px}
+.piece-identity>span{width:35px;height:40px;flex-shrink:0}
+.piece-identity .piece{width:100%;height:100%}
+.piece-identity h2{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:500;margin:0}
+.piece-identity small{font-size:10px;color:#b0c19f;display:block;margin-top:5px}
+.xp-track{height:4px;background:#33412d;margin:17px 0 8px}
+.xp-track>span{height:100%;display:block;background:#b5d88f}
+.xp-caption{font-size:9px;color:#afc29d;display:flex;justify-content:space-between;gap:8px}
+.piece-talents{margin-top:14px;display:flex;flex-direction:column;gap:8px;max-height:247px;overflow:auto}
+.talent{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;padding:11px 10px;border:1px solid var(--item-border);background:var(--item-bg);color:var(--item);text-align:left}
+.talent>span{font-size:11px;font-weight:600}
+.talent>small{font-size:8px;color:var(--item-ink);white-space:nowrap}
+.talent:disabled{cursor:default;opacity:.78}
+.armed{outline:2px solid var(--item);outline-offset:2px}
+.inventory .chronicle{margin:0;border-top:1px solid var(--line);padding-top:20px}
+.inventory .moves{height:125px;margin-top:12px}
+.moves b{overflow-wrap:anywhere;line-height:1.6}
+.inventory .resign{margin-top:0}
+.inventory .save-note{margin-top:-12px;line-height:1.7}
+.mastery-button{background:transparent;border:1px solid #506148;padding:12px;color:#c0d2ae;width:100%;font-size:11px;display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:22px;text-align:left}
+.mastery-button:hover{border-color:#b5d88f;color:#d1e4ba}
+.mastery-button>span{font-size:9px;color:#a2b993}
+.packs-waiting{font-size:11px;line-height:1.8;color:#d4b6ec;margin-top:19px}
+.piece-ranks{position:absolute;right:4px;top:4px;display:flex;gap:2px;pointer-events:none}
+.piece-ranks i{width:5px;height:5px;background:#f4c978;border:1px solid #4c4528}
+.pack-dialog{text-align:center}
+.pack-art{position:relative;display:block;width:132px;height:154px;margin:auto;filter:drop-shadow(2px 9px 5px #0c140c55)}
+.pack-art>svg{display:block;width:100%;height:100%}
+.pack-emblem{position:absolute;left:40px;top:49px;width:52px;height:65px}
+.pack-emblem .piece{width:100%;height:100%}
+.sealed-pack{margin:0 auto 25px}
+.pack-summary{font-size:11px!important;color:#c5acd7!important}
+.pack-dialog .primary{margin-top:25px}
+.reward-dialog{width:min(850px,100%)}
+.pack-choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:26px 0 23px}
+.pack-choice{padding:18px 14px}
+.pack-choice .choice-art{height:91px;margin-bottom:17px;flex-shrink:0}
+.pack-choice .choice-desc{font-size:11px;line-height:1.85}
+.pack-choice strong{font-size:15px;margin:8px 0 11px}
+.upgrade-sprite{position:relative;display:block;width:67px;height:80px;margin:auto}
+.upgrade-sprite>.piece{width:100%;height:100%}
+.upgrade-rune{position:absolute;width:25px;height:25px;right:-3px;bottom:0;background:var(--item-bg);border:1px solid var(--item-border);color:var(--item);padding:4px}
+.pack-choice{animation:pack-reveal .3s ease-out both;animation-delay:var(--reveal-delay,0ms)}
+@keyframes pack-reveal{from{transform:translateY(7px);filter:brightness(1.25)}to{transform:translateY(0);filter:brightness(1)}}
+.mastery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin:24px 0}
+.mastery-entry{padding:16px;background:#293523;border:1px solid #506746}
+.mastery-figure{width:38px;height:44px;margin-bottom:12px}
+.mastery-figure .piece{width:100%;height:100%}
+.mastery-entry h3{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:500;margin:0 0 8px}
+.mastery-entry>strong{font-size:10px;font-weight:500;color:#bbd49f}
+.mastery-entry>p{font-size:10px;line-height:1.7;color:#aab89e;margin:9px 0 0}
+.mastery-entry>p.unlocked{color:#e0c08c}
+@media(max-width:850px){.journey{flex-wrap:wrap}.journey .mastery-button{width:auto;margin:0;padding:9px 11px}.journey .packs-waiting{font-size:10px;margin:0}.inventory{gap:20px}}
+@media(max-width:600px){.journey .mastery-button{flex-basis:100%;margin-top:0;justify-content:space-between;font-size:10px;padding:8px 10px}.journey{row-gap:12px}.journey .packs-waiting{flex-basis:100%}.inventory{display:grid;grid-template-columns:1fr 1fr;gap:20px}.inventory>.chronicle{grid-column:1/-1}.inventory>.piece-sheet{padding-top:0;border-top:0}.piece-identity{gap:6px}.piece-identity>span{width:25px;height:33px}.piece-identity h2{font-size:12px}.piece-identity small{font-size:9px}.talent{padding:10px 7px;gap:5px;flex-wrap:wrap}.talent>span{font-size:10px}.talent>small{font-size:8px}.bag-item{grid-template-columns:30px 1fr;padding:10px 7px;gap:7px}.bag-art .relic-sprite{width:30px;height:38px}.bag-item strong{font-size:10px}.bag-item .item-type{font-size:6px;letter-spacing:.5px}.bag-item small{font-size:8px}.item-bag{max-height:255px}.xp-caption{font-size:8px}.piece-empty{font-size:10px}.pack-choices{grid-template-columns:1fr;gap:10px;margin:20px 0}.pack-choice{display:grid;grid-template-columns:65px 1fr;padding:14px;column-gap:14px}.pack-choice .choice-art{grid-row:1/4;height:78px;margin:0;align-self:center}.pack-choice .item-type,.pack-choice strong,.pack-choice .choice-desc{grid-column:2}.pack-choice strong{font-size:14px;margin:6px 0}.pack-choice .choice-desc{font-size:10px;line-height:1.8}.pack-choice .choice-art .relic-sprite{width:56px;height:70px}.upgrade-sprite{width:55px;height:70px}.mastery-grid{grid-template-columns:1fr 1fr;gap:10px}.mastery-entry{padding:12px}.mastery-entry h3{font-size:13px}.mastery-entry>p{font-size:9px}.mastery-entry>strong{font-size:9px}}
+@media(prefers-reduced-motion:reduce){.pack-choice{animation:none}}
+/* Run management is a full menu, separate from the live timed board. */
+button,a,.board{touch-action:manipulation}
+body{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+.quiet .help-label{border:0;padding:0;margin:0}
+.quiet .help-mark{margin-left:7px}
+.game-menu-button{color:var(--amber)}
+main.main-menu{max-width:1250px;grid-template-columns:minmax(300px,1fr) minmax(320px,440px);gap:90px;align-items:center;margin:60px auto;min-height:calc(100dvh - 280px)}
+.menu-world{position:relative;min-width:0;padding:20px 20px 45px}
+.menu-board{display:grid;grid-template-columns:repeat(8,1fr);aspect-ratio:1;transform:rotate(-5deg);border:8px solid #3f5039;box-shadow:0 22px 45px #07100988;outline:1px solid #6e8158}
+.menu-square{display:grid;place-items:center;aspect-ratio:1;min-width:0}
+.menu-square .piece{width:82%;height:90%}
+.menu-pack{position:absolute;bottom:0;right:0;transform:rotate(8deg)}
+.menu-content h1{font-size:clamp(48px,5vw,72px);line-height:1.03;font-weight:500;letter-spacing:-2.5px;margin:0 0 22px}
+.menu-content h1 br{display:initial}
+.menu-content>p{font-size:14px;line-height:1.9;color:#aabb9f;margin:0 0 27px}
+.menu-run-summary{display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--line);padding-top:22px;margin-bottom:23px}
+.menu-run-summary strong{font-size:10px;letter-spacing:1.4px;color:var(--amber);font-weight:600}
+.menu-run-summary span{font-size:12px;color:#c1d0b7;line-height:1.7}
+.menu-actions{display:flex;flex-direction:column;gap:10px}
+.menu-actions .primary{margin:0;padding:16px 18px;font-size:14px}
+.menu-action{border:1px solid #4e6044;padding:14px 16px;background:#1e291f;color:#d0ddc2;font-size:13px;display:flex;align-items:center;justify-content:space-between;gap:16px;text-align:left}
+.menu-action small{color:#a8bb99;font-size:10px;line-height:1.6;text-align:right}
+.menu-action:hover{border-color:#d7bd83;color:#f3dbaf}
+.quit-action{border-color:#665043;color:#d9b5a2;background:#29241d}
+.quit-action small{color:#bea58e}
+.menu-content>.menu-clock-note{font-size:10px;line-height:1.8;margin:23px 0 0;color:#9cb08d}
+/* King impact, then a screen-wide arcade victory ribbon, then rewards. */
+.king-fall>.piece{transform-origin:60% 90%;animation:king-topple .72s steps(9,end) forwards}
+.king-defeated>.piece{transform:translateY(7px) rotate(-80deg) scale(.82);opacity:.3}
+.checkmate-impact .board-frame{animation:board-impact .28s ease-out}
+@keyframes king-topple{0%{transform:translateY(0) rotate(0);opacity:1}24%{transform:translateY(-5px) rotate(-8deg);opacity:1}100%{transform:translateY(7px) rotate(-80deg) scale(.82);opacity:.3}}
+@keyframes board-impact{0%,100%{transform:translateX(0)}20%{transform:translateX(-4px)}45%{transform:translateX(4px)}70%{transform:translateX(-2px)}}
+.outcome-overlay{position:fixed;inset:0;z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:60px;background:#0a1617a8;overflow:hidden}
+.victory-ribbon{width:calc(100vw + 80px);padding:28px 50px 34px;background:#238dcc;border-bottom:7px solid #155381;transform:skew(-10deg) rotate(-3deg);box-shadow:0 22px 65px #071a2a88;animation:banner-arrival .45s cubic-bezier(.16,1,.3,1) both}
+.ribbon-content{display:flex;align-items:center;justify-content:center;gap:28px;transform:skew(10deg);color:#fff6d6;text-shadow:2px 4px 2px #15538188}
+.victory-number{font-family:'Space Grotesk',sans-serif;font-size:clamp(45px,10vw,136px);font-weight:700;font-style:italic;line-height:1;color:#ffe079;letter-spacing:-5px}
+.ribbon-content h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(36px,9.3vw,118px);line-height:1;font-weight:700;letter-spacing:-.04em;font-style:italic;margin:0}
+.ribbon-content p{font-family:'Space Grotesk',sans-serif;font-size:clamp(10px,1.7vw,19px);letter-spacing:3px;font-weight:600;margin:13px 0 0;color:#e3f6ff;text-shadow:none}
+.defeat-ribbon{background:#914558;border-color:#562b3d}
+.defeat-ribbon .ribbon-content{color:#fff0db;text-shadow:2px 4px 2px #562b3d88}
+.defeat-ribbon .ribbon-content p{color:#ffd4d0}
+.outcome-continue{border:1px solid #b8d6dc;background:#172b32;color:#ecf6ed;font-size:13px;padding:14px 30px;position:relative;z-index:1}
+.outcome-continue:hover{border-color:var(--amber);color:var(--amber)}
+@keyframes banner-arrival{from{transform:translateX(-120%) skew(-10deg) rotate(-3deg)}to{transform:translateX(0) skew(-10deg) rotate(-3deg)}}
+@media(max-width:1000px){main.main-menu{gap:35px;grid-template-columns:minmax(250px,1fr) minmax(290px,1fr)}.menu-world{padding-left:10px}.menu-content h1{font-size:54px}}
+@media(max-width:700px){main.main-menu{display:block;max-width:470px;padding:0 7%;margin:32px auto 45px;min-height:calc(100dvh - 210px)}.menu-world{display:none}.menu-content h1{font-size:55px;letter-spacing:-2px}.menu-content h1 br{display:initial}.menu-content h1 em{margin-left:0}.menu-content>p{font-size:13px;margin-bottom:22px}.menu-run-summary{padding-top:19px;margin-bottom:19px}.menu-actions .primary{padding:15px 17px}.menu-action{padding:13px 15px;font-size:12px}.menu-action small{font-size:9px}.victory-ribbon{padding:24px 35px 28px}.ribbon-content{gap:17px}.ribbon-content p{letter-spacing:1.5px;margin-top:9px}.victory-number{letter-spacing:-2px}.outcome-overlay{gap:48px}}
+@media(max-width:600px){.header-right #help .help-label{display:none}.header-right #help{padding-left:7px}.quiet .help-mark{margin-left:0}.header-right .game-menu-button{padding:9px 0 9px 7px;margin-left:4px;font-size:11px}}
+@media(prefers-reduced-motion:reduce){.king-fall>.piece{animation:none;transform:translateY(7px) rotate(-80deg) scale(.82);opacity:.3}.checkmate-impact .board-frame,.victory-ribbon{animation:none}}
+.talent{flex-wrap:wrap}
+.talent>.talent-description{flex-basis:100%;font-size:9px;line-height:1.75;font-weight:400;color:var(--item-ink)}

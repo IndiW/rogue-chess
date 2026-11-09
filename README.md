@@ -1,29 +1,62 @@
 # Rogue Chess
-A pixel-art chess roguelike, built for GitHub Pages. No backend, accounts, or runtime API keys.
+A pixel-art chess roguelike for [GitHub Pages](https://indiw.github.io/rogue-chess/). No backend, accounts, or runtime API keys.
 
-## Play
-You play White against Stockfish 17.1 lite running in a browser Web Worker. Win to advance a floor; lose or resign to choose a relic and restart at floor 1. Draw to replay the current floor. Standard chess legality is provided by chess.js, including castling, en passant, and a promotion picker.
+## Runs, clock and controls
+Start from the main menu. **Resume run** restores your saved battle or rewards. **Restart run** returns to floor 1 with a fresh build. **Quit run** discards the active run. Restart and quit preserve permanent capture mastery and ask for confirmation. The in-game Menu button pauses the run; clicking the logo also returns to the menu.
 
-Each battle gives you **three minutes of total player thinking time**, with no increment. The clock runs only on White’s turn, including Oracle searches, Echo moves, promotion choices, help dialogs, and time in background tabs. Black’s turn and engine loading on Black’s turn pause the clock. Timeout ends the run and opens relic selection. Each new battle starts at 3:00. Hourglass never refunds spent time.
+You play White. Win to advance a floor; draw to replay the floor with your army's progress. Defeat or timeout ends the run and offers a saved three-choice random starter-relic pack. Select one starting relic for the next attempt. Equipped piece upgrades and looted inventory reset after defeat.
 
-- **Echo stone:** once per battle, move the same piece twice. Each move must be legal; you cannot leave your king in check. End the turn early if desired. Giving check ends your turn immediately, preventing an unanswered check. Checkmate ends the battle immediately.
-- **Oracle lens:** one full-skill Stockfish recommendation per battle, with up to 2.5 seconds of analysis.
-- **Hourglass:** undo your last turn and the opponent reply, once per battle.
-- **Royal seed:** start each battle with a knight in place of the a2 pawn.
+Each battle has **3:00 of player thinking time**, no increment. The clock starts only after White makes the first actual move. Selecting a piece, arming a power, or considering the first move does not start it. After that, it runs on White's turns, including extra moves, promotion choices, Oracle analysis, and background tabs. It pauses during Black's turn, in the main menu, and between battles. Hourglass never refunds time. Closing the page saves and pauses the clock; runs, pending packs, and their revealed choices can be resumed on this device.
 
-Relic images use the same pixel grid, directional highlights, and shadows as the pieces. Type colors and visible labels identify **Time** (purple: Echo stone and Hourglass), **Insight** (blue: Oracle lens), and **Growth** (green: Royal seed).
+Touch controls suppress accidental double-tap zoom while preserving pinch zoom. Checkmate first topples the defeated king, then shows a full-width blue/gold victory ribbon (or a defeat ribbon), then opens rewards or the K.O. screen. Reduced-motion preferences are respected.
 
-A chosen relic lasts the run; charges refresh per floor. Choosing a relic after defeat replaces the previous one. Progress is stored locally; reloading restarts the current battle. Stockfish skill rises from 0 on floor 1 to 20 on floor 11. Search depth caps rise from 4 to 24, with think-time limits from 250 ms to 2 seconds. Later floors retain maximum difficulty. The Oracle uses skill 20, depth cap 28, and a 2.5-second limit regardless of floor. These are difficulty settings, not measured Elo ratings.
+## Capture XP and packs
+Captures award XP to the capturing piece: pawn **1**, knight/bishop **3**, rook **5**, queen **9**. Scholar adds 1 XP. Each individual piece earns packs at **3, 8 and 15 XP**, at most three per run. Open earned packs between battles after a win or draw.
 
-The 7.3 MB single-threaded WebAssembly engine downloads on the first search, then runs locally. No shared-memory or special server headers are required. If it cannot load or a search stalls, a small JavaScript minimax engine supplies legal moves instead. The opponent label identifies the active backend. If both engines fail, a retry control is shown.
+Every piece pack contains exactly **two distinct, random eligible upgrades for that piece** and **one random general item**. Choose one; the other two are discarded. Owned upgrades are filtered out. Rolls are saved before their choices are shown, so reloading preserves the same offer. An improved passive replaces the corresponding charged movement ability instead of creating a redundant duplicate.
 
-## Audio and pixel pieces
+Piece identity follows the starting square, so the two knights or rooks have separate XP and builds. XP, upgrades, and identity continue between floors; captured pieces return next battle. Promotion and Royal seed transformations do not erase that identity. Charged piece abilities refresh each battle. General items from packs are consumable; the starting relic refreshes each battle.
 
-Use the music-note button in the header to start the original 8-bit soundtrack. Music is off on first visit; sound effects are on. Both controls save your preference on this device. Audio starts after a click or keypress, and the music pauses in background tabs. Move, capture, castling, promotion, and check cues are synthesized with Web Audio, with no audio downloads or external services.
+## Piece upgrades
+Each type has four starting options and two branches unlocked by lifetime mastery:
 
-The six piece types use original 15 × 19 pixel silhouettes, carved details, directional highlights, and contact shadows.
+| Piece | Starting movement power | Other starting options | At 8 mastery XP | At 20 mastery XP |
+| --- | --- | --- | --- | --- |
+| Pawn | Backstep: one backward empty-square step | Recall, Scholar, Momentum | Vanguard: starts a square forward | Second Wind |
+| Knight | Shadow Step: adjacent empty diagonal | Recall, Scholar, Chain Jump | Long Stride: also jumps 3+1, including captures | Second Wind |
+| Bishop | Sidestep: adjacent empty orthogonal | Recall, Scholar, Momentum | Pathfinder: unlimited Sidesteps | Second Wind |
+| Rook | Corner Step: adjacent empty diagonal | Recall, Scholar, Momentum | Cornerwalk: unlimited Corner Steps | Second Wind |
+| Queen | Royal Leap: empty-square knight jump | Recall, Scholar, Momentum | Skydance: unlimited Royal Leaps | Second Wind |
+| King | King's Leap: empty, safe knight jump | Recall, Scholar, Momentum | Royal March: two safe, clear orthogonal steps | Second Wind |
 
-## Develop
+- **Recall:** return to this piece's empty starting square once per battle. Does not restore castling rights.
+- **Scholar:** captures by this piece earn 1 extra XP and mastery.
+- **Momentum / Chain Jump:** once per battle, take a second non-capturing move with this piece. Giving check ends the turn. You can end the extra turn early.
+- **Second Wind:** charged abilities on this piece get two uses each battle.
+
+All moves must protect the player's king. Long Stride attacks also restrict enemy king movement and castling. Charged escapes are considered before declaring checkmate. Inspect a piece to see its XP, abilities, and remaining charges; arm a charged ability and select a highlighted destination. Small gold markers identify upgraded pieces.
+
+Capture XP is banked as permanent mastery at battle end, including defeat, restart, or quit. New branches enter that piece type's random pool at **8 and 20 lifetime XP**. Unlocks persist; equipped builds do not survive a lost run. Hourglass rewinds the board, piece XP and pending packs, preventing duplicate mastery from undone captures. Time and consumed inventory remain spent.
+
+## General items
+- **Echo stone:** move the same piece twice; the extra action may capture. Giving check ends the turn.
+- **Oracle lens:** recommend a strong move for the current position, including equipped powers.
+- **Hourglass:** undo your last full turn and the enemy reply. Piece charges are restored with the position, but time and consumed general items are not.
+- **Royal seed:** transform the a2 pawn into a knight at the next battle. A starting Royal seed does this every battle; looted seeds supply one battle each. Redundant seeds are excluded from packs if Royal seed is already the starting relic.
+
+Pixel art and text labels identify **Time** (purple), **Insight** (blue), **Growth** (green), and piece **Movement** (amber).
+
+## Browser opponents
+Normal positions use **Stockfish 17.1 lite** in a single-threaded WebAssembly worker. Skill increases from 0 at floor 1 to 20 at floor 11, with depth caps 4–24 and think-time limits 250–2000 ms. Oracle uses full skill, depth cap 28 and up to 2.5 seconds. These are difficulty settings, not measured Elo ratings.
+
+When movement powers or Echo charges are available, a separate **Rogue-aware engine** searches the same `RogueGame` actions and king-safety rules used by the player. It considers upgraded attacks, charged moves, and same-piece extra turns. It uses iterative deepening, alpha-beta pruning, capture search, material/position evaluation and power charges within a time budget. Its strength is different from Stockfish's standard-chess strength. The active backend is named under the Warden.
+
+The 7.3 MB Stockfish WASM downloads only when needed and runs locally, without special server headers. If it cannot load or stalls in a standard position, a lightweight JavaScript fallback keeps the game playable. Variant failures show a retry action rather than silently using an engine with different rules.
+
+## Audio
+Use the music-note button for the original synthesized 8-bit soundtrack; the speaker independently controls move, capture, castle, promotion and check sounds. Preferences are saved. Audio starts after a browser gesture; music pauses in background tabs. No audio downloads or external audio services are used.
+
+## Develop and deploy
 Requires Node 22 or later.
 
 ```sh
@@ -33,10 +66,13 @@ npm test
 npm run build
 ```
 
-`predev` and `prebuild` stage the engine assets into `public/engine/`; only the lite single-threaded distribution is shipped. `npm test` covers engine settings, the lightweight fallback, and tactical positions using the actual bundled Stockfish WASM.
+`predev` and `prebuild` stage the pinned lite Stockfish assets from npm. Tests cover standard and variant tactics, movement and castling safety, packs, rewards, XP, mastery and clocks. Source is split into `rules.js` (shared legality), `upgrades.js` (catalog), `progression.js` (XP/pack rules), `variant-engine.js` (upgrade-aware search), and `main.js` (UI/run state).
 
-The build uses `/rogue-chess/` as its asset base. `.github/workflows/pages.yml` builds and deploys to GitHub Pages on pushes to main. Enable Pages with GitHub Actions as the source.
+The build uses `/rogue-chess/` as its asset base. For local production preview, run `npx vite preview --base=/rogue-chess/`. `.github/workflows/pages.yml` tests, builds, and deploys pushes to `main` through GitHub Actions.
 
-Chess rules: [chess.js](https://github.com/jhlywa/chess.js), BSD-2-Clause. Stockfish.js 17.1 is GPLv3; see `public/engine/NOTICE.txt`. The build copies the pinned, unmodified lite engine and license from npm. Corresponding source and build scripts are included in `public/engine/stockfish-source.tar.gz` (upstream revision `602fd7e1a571a2be71f242942db90483731f2a1f`, generated engine binaries omitted). Credits, GPL text, and source downloads are also linked from the game’s help panel.
+Progress is device-local under `rogue-chess-v2`; existing `rogue-chess-v1` profiles are migrated. A single save stores profile and run together; game actions and pack rolls save immediately, with clock snapshots every second. General audio preferences use their own key.
 
-Original pixel piece silhouettes authored for this project. Google Fonts are optional network fonts with local fallbacks.
+## Credits
+Chess rules: [chess.js](https://github.com/jhlywa/chess.js), BSD-2-Clause. Stockfish.js 17.1 is GPLv3; see `public/engine/NOTICE.txt`. The pinned, unmodified lite JS/WASM and license are copied from npm. Corresponding source and build scripts are included in `public/engine/stockfish-source.tar.gz` (revision `602fd7e1a571a2be71f242942db90483731f2a1f`, generated binaries omitted). Credits, GPL text, and source are linked in help.
+
+Original pixel pieces, item images, pack art, and procedural score were authored for this project. Google Fonts are optional network fonts with local fallbacks.

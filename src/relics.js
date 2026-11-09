@@ -1,7 +1,7 @@
 export const relics = [
-  { id:'echo', name:'Echo stone', type:'time', typeName:'Time', desc:'Once per battle, move the same piece twice before your opponent replies. Giving check ends your turn.' },
-  { id:'oracle', name:'Oracle lens', type:'insight', typeName:'Insight', desc:'Reveal the engine’s best move. One use per battle.' },
-  { id:'rewind', name:'Hourglass', type:'time', typeName:'Time', desc:'Undo your last turn and the enemy reply. One use per battle. Spent time is not restored.' },
+  { id:'echo', name:'Echo stone', type:'time', typeName:'Time', desc:'Move the same piece twice before your opponent replies. Giving check ends your turn.' },
+  { id:'oracle', name:'Oracle lens', type:'insight', typeName:'Insight', desc:'Reveal the engine’s recommended move for this position.' },
+  { id:'rewind', name:'Hourglass', type:'time', typeName:'Time', desc:'Undo your last turn and the enemy reply. Time and consumed items are not restored.' },
   { id:'crown', name:'Royal seed', type:'growth', typeName:'Growth', desc:'Begin each battle with your a-pawn transformed into a knight.' },
 ];
 // Original pixel art, built on the same integer grid and left-lit shading as

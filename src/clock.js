@@ -7,6 +7,8 @@ export class PlayerClock {
     this.reset();
   }
   reset() { this.bank = this.durationMs; this.startedAt = null; }
+  snapshot() { return {remainingMs:this.remainingMs,running:this.running,savedAt:this.now()}; }
+  restore(saved) { this.bank=Math.max(0,Math.min(this.durationMs,saved.remainingMs-(saved.running?Math.max(0,this.now()-saved.savedAt):0)));this.startedAt=null;this.setRunning(saved.running); }
   get running() { return this.startedAt !== null; }
   get remainingMs() {
     return Math.max(0, this.bank - (this.running ? Math.max(0, this.now() - this.startedAt) : 0));

@@ -24,3 +24,8 @@ test('pausing does not refund time, and display rounds upward without negative v
   assert.equal(clock.remainingMs,149999);assert.equal(formatClock(clock.remainingMs),'2:30');
   assert.equal(formatClock(180000),'3:00');assert.equal(formatClock(1),'0:01');assert.equal(formatClock(-5),'0:00');
 });
+test('saved clocks count offline player time but preserve paused time',()=>{
+ let now=1000;const a=new PlayerClock({now:()=>now});a.setRunning(true);now+=10000;const saved=a.snapshot();now+=20000;
+ const b=new PlayerClock({now:()=>now});b.restore(saved);assert.equal(b.remainingMs,150000);assert.equal(b.running,true);
+ b.setRunning(false);const paused=b.snapshot();now+=60000;const c=new PlayerClock({now:()=>now});c.restore(paused);assert.equal(c.remainingMs,150000);assert.equal(c.running,false);
+});

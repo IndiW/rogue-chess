@@ -23,17 +23,36 @@ export class BrowserEngine {
       const request = this.queue.shift();
       try {
         let move;
+        if(request.requiresVariant){
+          this.name='Rogue-aware engine';
+          move=await this.variantSearch(request);
+        }else{
+        this.name=this.fallbackOnly?'Classic engine':'Stockfish 17.1';
         if (!this.fallbackOnly) {
           try { await this.initialize(); move = await this.search(request); }
           catch { this.useFallback(); }
         }
         if (this.fallbackOnly) move = await this.fallbackSearch(request);
+        }
         this.onmessage?.({ data: { id: request.id, kind: request.kind, move, backend: this.name } });
       } catch {
         this.onmessage?.({ data: { id: request.id, kind: request.kind, error: true, backend: this.name } });
       }
     }
     this.processing = false;
+  }
+  variantSearch(request) {
+    this.onstatus?.(request.kind==='hint'?'The Oracle is reading your powers…':'The Warden is planning around your powers…');
+    return new Promise((resolve,reject)=>{
+      const worker=new Worker(new URL('./variant-worker.js',import.meta.url),{type:'module'});
+      const profile=engineSettings(request.level,request.kind);
+      const settings={timeMs:profile.timeMs,depth:request.kind==='hint'?5:Math.min(4,2+Math.floor((request.level-1)/4))};
+      const timer=setTimeout(()=>{worker.terminate();reject(new Error('Variant search timed out'));},settings.timeMs+10000);
+      const finish=(error,move)=>{clearTimeout(timer);worker.terminate();if(error)reject(error);else resolve(move);};
+      worker.onmessage=({data})=>finish(data.error?new Error('Variant search failed'):null,data.move);
+      worker.onerror=event=>{event.preventDefault();finish(new Error('Variant search failed'));};
+      worker.postMessage({id:request.id,state:request.state,settings});
+    });
   }
   initialize() {
     if (this.initialized) return this.initialized;
