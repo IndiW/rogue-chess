@@ -1,0 +1,19 @@
+Stockfish.js 17.1 lite single-threaded build
+Copyright (c) 2025 Chess.com, LLC and the Stockfish contributors.
+Stockfish.js: https://github.com/nmrugg/stockfish.js
+Stockfish: https://github.com/official-stockfish/Stockfish
+License: GNU GPL version 3 (see COPYING.txt in this directory).
+
+The JavaScript/WASM engine is redistributed unmodified from the pinned npm
+package stockfish@17.1.0. Build basename: stockfish-17.1-lite-single-03e3232.
+
+Corresponding source, build scripts and author credits are available here:
+./stockfish-source.tar.gz
+Source revision: 602fd7e1a571a2be71f242942db90483731f2a1f
+This source archive preserves the upstream source and build files and omits
+only the precompiled stockfish-17.1-*.js and *.wasm outputs.
+Original upstream archive:
+https://github.com/nmrugg/stockfish.js/archive/602fd7e1a571a2be71f242942db90483731f2a1f.tar.gz
+See its README.md and build.js --help for build instructions (Emscripten).
+The lite build uses --lite --single-threaded --no-split. Network download references and SHA256
+names are provided in src/lite_nets.h and the source build scripts.

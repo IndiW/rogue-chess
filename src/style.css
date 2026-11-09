@@ -22,3 +22,5 @@
 .header-right .quiet{margin-left:8px}
 @media(max-width:850px){.header-right{font-size:0;gap:0}.header-right>.local-dot{display:none}.audio-controls{margin-left:0}.audio-toggle{font-size:9px;padding:8px}.header-right .quiet{font-size:11px}}
 @media(max-width:600px){.audio-controls{gap:6px}.audio-toggle{width:36px;height:36px;padding:9px;justify-content:center}.audio-toggle span{display:none}.header-right .quiet{margin-left:4px;padding-left:8px}.brand{font-size:17px;gap:5px}.brand-mark{margin-right:2px;width:22px}}
+.dialog a{color:var(--amber);text-underline-offset:3px}
+.dialog{max-height:calc(100dvh - 40px);overflow-y:auto}

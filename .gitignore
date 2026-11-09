@@ -2,3 +2,6 @@ node_modules/
 dist/
 test-results/
 work/
+public/engine/stockfish-*.js
+public/engine/stockfish-*.wasm
+public/engine/COPYING.txt
