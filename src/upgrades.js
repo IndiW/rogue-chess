@@ -1,7 +1,7 @@
 import { sprite } from './pieces.js';
 export const PIECE_NAMES = {p:'Pawn',n:'Knight',b:'Bishop',r:'Rook',q:'Queen',k:'King'};
 export const CAPTURE_XP = {p:1,n:3,b:3,r:5,q:9};
-export const PACK_THRESHOLDS = [3,8,15];
+export const PACK_THRESHOLDS = [3,6,10];
 const movement = {
  p:{name:'Backstep',effect:'backstep',desc:'Once per battle, step one square backward into an empty square.'},
  n:{name:'Shadow Step',effect:'diagonal',desc:'Once per battle, step diagonally to an adjacent empty square.'},
@@ -31,7 +31,7 @@ export function upgradesFor(piece,mastery=0){return UPGRADES.filter(u=>u.piece==
 export function effectOwned(piece,effect){return (piece?.upgrades||[]).some(id=>upgradeById(id)?.effect===effect);}
 export function createArmy(){
  const back='rnbqkbnr';const army=[];
- for(let file=0;file<8;file++)for(const rank of [1,2]){const origin='abcdefgh'[file]+rank;army.push({id:origin,origin,kind:rank===2?'p':back[file],square:origin,xp:0,packsEarned:0,upgrades:[]});}
+ for(let file=0;file<8;file++)for(const rank of [1,2]){const origin='abcdefgh'[file]+rank;army.push({id:origin,origin,kind:rank===2?'p':back[file],square:origin,xp:0,captures:0,packsEarned:0,upgrades:[]});}
  return army;
 }
 export function upgradeSprite(id){

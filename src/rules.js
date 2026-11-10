@@ -1,5 +1,5 @@
 import {Chess} from 'chess.js';
-import {createArmy,effectOwned,upgradeById} from './upgrades.js';
+import {createArmy,effectOwned,upgradeById,PACK_THRESHOLDS} from './upgrades.js';
 const ORTH=[[1,0],[-1,0],[0,1],[0,-1]], DIAG=[[1,1],[-1,1],[1,-1],[-1,-1]];
 const KNIGHT=[[1,2],[2,1],[-1,2],[-2,1],[1,-2],[2,-1],[-1,-2],[-2,-1]];
 const STRIDE=[[1,3],[3,1],[-1,3],[-3,1],[1,-3],[3,-1],[-1,-3],[-3,-1]];
@@ -8,7 +8,7 @@ const square=(x,y)=>x>=0&&x<8&&y>=0&&y<8?'abcdefgh'[x]+(y+1):null;
 const clone=value=>JSON.parse(JSON.stringify(value));
 export class RogueGame {
  constructor(state={}){
-  this.chess=new Chess(state.fen);this.army=clone(state.army||createArmy());this.charges={...state.charges};this.extra=state.extra?{...state.extra}:null;this.echo=state.echo||0;
+  this.chess=new Chess(state.fen);this.army=clone(state.army||createArmy());for(const p of this.army){if(!Number.isFinite(p.captures))p.captures=p.packsEarned?PACK_THRESHOLDS[Math.min(2,p.packsEarned-1)]:0;}this.charges={...state.charges};this.extra=state.extra?{...state.extra}:null;this.echo=state.echo||0;
  }
  static newBattle(army,echo=0,crown=false){
   const game=new RogueGame({army,echo});

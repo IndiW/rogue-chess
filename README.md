@@ -8,14 +8,16 @@ You play White. Win to advance a floor; draw to replay the floor with your army'
 
 Each battle has **3:00 of player thinking time**, no increment. The clock starts only after White makes the first actual move. Selecting a piece, arming a power, or considering the first move does not start it. After that, it runs on White's turns, including extra moves, promotion choices, Oracle analysis, and background tabs. It pauses during Black's turn, in the main menu, and between battles. Hourglass never refunds time. Closing the page saves and pauses the clock; runs, pending packs, and their revealed choices can be resumed on this device.
 
-Touch controls suppress accidental double-tap zoom while preserving pinch zoom. Checkmate first topples the defeated king, then shows a full-width blue/gold victory ribbon (or a defeat ribbon), then opens rewards or the K.O. screen. Reduced-motion preferences are respected.
+Touch controls suppress accidental double-tap zoom while preserving pinch zoom. Checkmate first topples the defeated king, then shows a full-width blue/gold victory ribbon (or a defeat ribbon), then opens the rewards screen. Reduced-motion preferences are respected.
 
 ## Capture XP and packs
-Captures award XP to the capturing piece: pawn **1**, knight/bishop **3**, rook **5**, queen **9**. Scholar adds 1 XP. Each individual piece earns packs at **3, 8 and 15 XP**, at most three per run. Open earned packs between battles after a win or draw.
+Captures award XP to the capturing piece: pawn **1**, knight/bishop **3**, rook **5**, queen **9**. Scholar adds 1 XP. Each individual piece earns packs at **3, 6 and 10 actual captures**, at most three per run. Capturing a queen still counts as one capture; Scholar increases mastery XP, not pack progress. Previously earned packs remain earned when migrating a save. Open earned packs on the dedicated rewards screen between battles after a win or draw.
 
 Every piece pack contains exactly **two distinct, random eligible upgrades for that piece** and **one random general item**. Choose one; the other two are discarded. Owned upgrades are filtered out. Rolls are saved before their choices are shown, so reloading preserves the same offer. An improved passive replaces the corresponding charged movement ability instead of creating a redundant duplicate.
 
 Piece identity follows the starting square, so the two knights or rooks have separate XP and builds. XP, upgrades, and identity continue between floors; captured pieces return next battle. Promotion and Royal seed transformations do not erase that identity. Charged piece abilities refresh each battle. General items from packs are consumable; the starting relic refreshes each battle.
+
+Items occupy four fixed slots above the board, with selected-piece abilities directly beneath them. Pack counters do not change the board position. Between-game rewards show battle totals, sealed packs, claimed rewards and the next-floor loadout. Open a pack, watch its seal break, then choose one of three rewards; all packs must be claimed before advancing.
 
 ## Piece upgrades
 Each type has four starting options and two branches unlocked by lifetime mastery:
@@ -54,7 +56,7 @@ When movement powers or Echo charges are available, a separate **Rogue-aware eng
 The 7.3 MB Stockfish WASM downloads only when needed and runs locally, without special server headers. If it cannot load or stalls in a standard position, a lightweight JavaScript fallback keeps the game playable. Variant failures show a retry action rather than silently using an engine with different rules.
 
 ## Audio
-Use the music-note button for the original synthesized 8-bit soundtrack; the speaker independently controls move, capture, castle, promotion and check sounds. Preferences are saved. Audio starts after a browser gesture; music pauses in background tabs. No audio downloads or external audio services are used.
+The original 8-bit soundtrack is a locally hosted, looping MP3 played through the browser media channel. Music defaults on after a user gesture; explicit saved mute preferences are respected. Use the menu Music control or header music-note button to start, retry or mute. The speaker independently controls synthesized move, capture, castle, promotion, check and pack-opening sounds. Music pauses in background tabs and resumes on return. No external audio services are used. The optional authoring script `node scripts/render-music.mjs` requires ffmpeg; ordinary builds use the tracked soundtrack.
 
 ## Develop and deploy
 Requires Node 22 or later.

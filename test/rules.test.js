@@ -48,3 +48,6 @@ test('extra actions retain passive movement upgrades, without arming another cha
  g.move(g.actions().find(m=>m.from==='b1'&&m.to==='c3'&&m.ability==='item:echo'));
  const moves=g.moves({square:'c3'});const stride=moves.find(m=>m.to==='f4'&&m.ability==='n-advanced');assert.ok(stride);assert.ok(!moves.some(m=>m.ability==='n-chain'));g.move(stride);assert.equal(g.turn(),'b');assert.equal(g.extra,null);
 });
+test('legacy saves preserve already-earned pack milestones when capture counters are introduced',()=>{
+ const army=createArmy();for(const piece of army)delete piece.captures;army.find(p=>p.id==='b1').packsEarned=1;army.find(p=>p.id==='g1').packsEarned=2;const game=new RogueGame({army});assert.equal(game.army.find(p=>p.id==='b1').captures,3);assert.equal(game.army.find(p=>p.id==='g1').captures,6);assert.equal(game.army.find(p=>p.id==='a2').captures,0);
+});

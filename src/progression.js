@@ -6,8 +6,8 @@ export function secureRandom(){const data=new Uint32Array(1);if(globalThis.crypt
 function sample(items,count,random){const pool=[...items];for(let i=pool.length-1;i>0;i--){const j=Math.floor(random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}return pool.slice(0,count);}
 export function awardCapture(army,pieceId,captured,battleXp,packs){
  const owner=army.find(p=>p.id===pieceId);if(!owner||!CAPTURE_XP[captured])return 0;
- const xp=CAPTURE_XP[captured]+(effectOwned(owner,'scholar')?1:0);owner.xp+=xp;battleXp[owner.kind]=(battleXp[owner.kind]||0)+xp;
- while(owner.packsEarned<PACK_THRESHOLDS.length && owner.xp>=PACK_THRESHOLDS[owner.packsEarned]){
+ const xp=CAPTURE_XP[captured]+(effectOwned(owner,'scholar')?1:0);owner.xp+=xp;owner.captures=(owner.captures||0)+1;battleXp[owner.kind]=(battleXp[owner.kind]||0)+xp;
+ while(owner.packsEarned<PACK_THRESHOLDS.length && owner.captures>=PACK_THRESHOLDS[owner.packsEarned]){
   owner.packsEarned++;packs.push({id:uid(),owner:owner.id,kind:owner.kind,choices:null});
  }
  return xp;

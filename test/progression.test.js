@@ -1,9 +1,14 @@
 import {test} from 'node:test';import assert from 'node:assert/strict';
 import {createArmy,upgradesFor,UPGRADES} from '../src/upgrades.js';
 import {emptyMastery,awardCapture,rollPack,claimPack,rollStarterPack} from '../src/progression.js';
-test('captures award piece XP and packs at 3, 8 and 15; no packs beyond the cap',()=>{
- const army=createArmy(),xp=emptyMastery(),packs=[];awardCapture(army,'b1','n',xp,packs);assert.equal(packs.length,1);assert.equal(army.find(p=>p.id==='b1').xp,3);
- awardCapture(army,'b1','r',xp,packs);assert.equal(packs.length,2);awardCapture(army,'b1','q',xp,packs);assert.equal(packs.length,3);awardCapture(army,'b1','q',xp,packs);assert.equal(packs.length,3);assert.equal(xp.n,26);
+test('packs require 3, 6 and 10 actual captures, independent of captured piece value',()=>{
+ const army=createArmy(),xp=emptyMastery(),packs=[];const owner=army.find(p=>p.id==='b1');
+ awardCapture(army,'b1','q',xp,packs);assert.equal(owner.xp,9);assert.equal(owner.captures,1);assert.equal(packs.length,0);
+ awardCapture(army,'b1','r',xp,packs);assert.equal(owner.xp,14);assert.equal(packs.length,0);
+ awardCapture(army,'b1','p',xp,packs);assert.equal(owner.captures,3);assert.equal(packs.length,1);
+ for(let n=0;n<3;n++)awardCapture(army,'b1','p',xp,packs);assert.equal(owner.captures,6);assert.equal(packs.length,2);
+ for(let n=0;n<4;n++)awardCapture(army,'b1','p',xp,packs);assert.equal(owner.captures,10);assert.equal(packs.length,3);
+ awardCapture(army,'b1','q',xp,packs);assert.equal(packs.length,3);assert.equal(xp.n,31);
 });
 test('each saved roll has exactly two eligible piece upgrades and one general item',()=>{
  for(const kind of ['p','n','b','r','q','k'])for(let seed=0;seed<20;seed++){
@@ -29,4 +34,7 @@ test('all three packs remain eligible after prior choices, at every mastery tier
 });
 test('passive movement replaces its charged version rather than stacking redundant abilities',()=>{
  const army=createArmy(),owner=army.find(p=>p.kind==='b');owner.upgrades=['b-step'];const pack={owner:owner.id,kind:'b',choices:[{id:'b-advanced',kind:'piece'}]};claimPack(pack,'b-advanced',army,{});assert.deepEqual(owner.upgrades,['b-advanced']);
+});
+test('Scholar boosts mastery XP without accelerating capture-count milestones',()=>{
+ const army=createArmy(),owner=army.find(p=>p.id==='a2'),xp=emptyMastery(),packs=[];owner.upgrades=['p-scholar'];awardCapture(army,'a2','q',xp,packs);assert.equal(owner.xp,10);assert.equal(owner.captures,1);assert.equal(xp.p,10);assert.equal(packs.length,0);
 });
